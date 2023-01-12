@@ -70,13 +70,17 @@ export default function Modal({ setShowModal, id = -1, userID, saveData }) {
           }
         });
     } else {
-      axios.post('https://639feb7024d74f9fe829db07.mockapi.io/api/v1/environment', envmData)
-        .then(response => {
-          if (response.data.status === "success") {
-            saveData(envmData, isUpdate);
-            setShowModal(false);
-          }
-        });
+        if(!Object.keys(envmData).every(key => key==='UserId' || envmData[key] === '' || envmData[key] === false)){
+            axios.post('https://639feb7024d74f9fe829db07.mockapi.io/api/v1/environment', envmData)
+            .then(response => {
+              if (response.data.status === "success") {
+                saveData(envmData, isUpdate);
+                setShowModal(false);
+              }
+            });
+        } else {
+            alert('Please fill all the fields');
+        }
     }
   }
   return (

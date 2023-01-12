@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaPlus } from 'react-icons/fa';
 import axios from 'axios';
 import { useSelector } from 'react-redux'
@@ -18,6 +18,8 @@ export default function Resource() {
 	const [page, setPage] = useState('content');
 	const [envList, setEnvList] = useState([]);
 	const [resList, setResList] = useState([resType]);
+	const [summarySubmitRes, setSummarySubmitRes] = useState(null);
+
 	useEffect(() => {
 		if (!envList.length) {
 			axios.get('https://639feb7024d74f9fe829db07.mockapi.io/api/v1/environment/?user_id=' + currentUser.id)
@@ -38,11 +40,21 @@ export default function Resource() {
 			setPage('content')
 		}
 	}, [resList, page]);
+
 	const RenderField = (props) => {
 		const [type, setType] = useState(props.res.type);
 		const [flavour, setFlavour] = useState(props.res.flavour);
 		const [template, setTemplate] = useState(props.res.template);
+		const [quantinty, setQuantity] = useState(props.res.quantity);
+		const [ven_release, setVen_release] = useState(props.res.ven_release);
+		const [ven_os, setVen_os] = useState(props.res.ven_os);
+		const [ven_version, setVen_version] = useState(props.res.ven_version);
+		const [basename, setBasename] = useState(props.res.basename);
+		const [default_location, setDefault_location] = useState(props.res.default_location);
+		const [required, setRequired] = useState(props.res.required);
+		const [build_info, setBuild_info] = useState(props.res.build_info);
 		const [resField, setResField] = useState([]);
+
 		const onChangeType = (param) => {
 			setType(param);
 			if (resData) {
@@ -54,16 +66,25 @@ export default function Resource() {
 				}
 			}
 		}
+
 		useEffect(() => {
 			let tmp = resList;
 			tmp[props.index] = {
 				"type": type,
 				"flavour": flavour,
-				"template": template
+				"template": template,
+				"quantity": quantinty,
+				"ven_release": ven_release,
+				"ven_os": ven_os,
+				"ven_version": ven_version,
+				"basename": basename,
+				"default_location": default_location,
+				"required": required,
+				"build_info": build_info,
 			}
 			setResList(tmp);
 			onChangeType(type)
-		}, [type, flavour, template]);
+		}, [type, flavour, template, quantinty, ven_release, ven_os, ven_version, basename, default_location, required, build_info]);
 		const fields = resField;
 		const handleChange = (item, val) => {
 			for (var key in item) {
@@ -72,6 +93,30 @@ export default function Resource() {
 				}
 				if (key === 'flavour') {
 					setFlavour(val);
+				}
+				if(key === 'quantity'){
+					setQuantity(val);
+				}
+				if(key === 'ven_release'){
+					setVen_release(val);
+				}
+				if(key === 'ven_os'){
+					setVen_os(val);
+				}
+				if(key === 'build_info'){
+					setBuild_info(val);
+				}
+				if(key === 'ven_version'){
+					setVen_version(val);
+				}
+				if(key === 'basename'){
+					setBasename(val);
+				}
+				if(key === 'default_location'){
+					setDefault_location(val);
+				}
+				if(key === 'required'){
+					setRequired(val);
 				}
 			}
 		}
@@ -101,19 +146,85 @@ export default function Resource() {
 								<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="color">
 									{Object.keys(item)[0]}
 								</label>
-								<select onChange={(e) => handleChange(item, e.target.value)} className="w-full p-1.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-blue-600" name="color" value={item.flavour ? flavour : template}>
-									<option value={''} >{'Select one'}</option>
 									{item.flavour === 'dropdown' ? (
-										item.values.map((val, index) => (
+										<select value={flavour} onChange={(e) => handleChange(item, e.target.value)} className="w-full p-1.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-blue-600" name="color" >
+										<option value={''} >{'Select one'}</option>
+										{item.values.map((val, index) => (
 											<option value={val} key={index}>{val}</option>
-										))
+										))}
+										</select>
 									) : null}
 									{item.template_type === 'dropdown' ? (
-										item.values.map((val, index) => (
+										<select value={template} onChange={(e) => handleChange(item, e.target.value)} className="w-full p-1.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-blue-600" name="color" >
+										<option value={''} >{'Select one'}</option>
+										{item.values.map((val, index) => (
 											<option value={val} key={index}>{val}</option>
-										))
+										))}
+										</select>
 									) : null}
-								</select>
+									{
+                                    item.quantity === 'textbox' && (
+                                        <>
+                                        <input value={quantinty} onChange={(e) => handleChange(item, e.target.value)} type="text" className="w-full p-1.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-blue-600" required/>
+                                    </>
+                                    )
+                                	}
+									{
+										item.build_info === 'textbox' && (
+											<>
+											<input value={build_info} onChange={(e) => handleChange(item, e.target.value)} type="text" className="w-full p-1.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-blue-600" required/>
+										</>
+										)
+									}
+									{
+										item.default_location === 'textbox' && (
+											<>
+											<input value={default_location} onChange={(e) => handleChange(item, e.target.value)} type="text" className="w-full p-1.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-blue-600" required/>
+										</>
+										)
+									}
+									{
+										item.basename === 'textbox' && (
+											<>
+											<input value={basename} onChange={(e) => handleChange(item, e.target.value)} type="text" className="w-full p-1.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-blue-600" required/>
+										</>
+										)
+									}
+									{
+										item.ven_os === 'dropdown' && (
+											<>
+											<select value={ven_os} onChange={(e) => handleChange(item, e.target.value)} className="w-full p-1.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-blue-600" name="color" required>
+												<option value={''} >{'Select one'}</option>
+												{ 
+													item.values.map((val, index) => (
+														<option value={val} key={index}>{val}</option>
+													))
+												}
+											</select>
+										</>
+										)
+									}
+									{
+										item.ven_version === 'textbox' && (
+											<>
+											<input value={ven_version} onChange={(e) => handleChange(item, e.target.value)} type="text" className="w-full p-1.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-blue-600" required/>
+										</>
+										)
+									}
+									{
+										item.ven_release === 'textbox' && ( 
+											<>
+											<input value={ven_release} onChange={(e) => handleChange(item, e.target.value)} type="text" className="w-full p-1.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-blue-600" required/>
+										</>
+										)
+									}
+									{
+										item.required === 'checkbox' && (
+											<>
+											<input value={required} type="checkbox" id='cb' name='cb' onChange={(e) => handleChange(item, e.target.value)} className="p-1.5 text-gray-500 border rounded-md shadow-sm outline-none" required />
+										</>
+										)
+									}
 							</div>
 						))
 					) : null
@@ -123,6 +234,9 @@ export default function Resource() {
 	}
 
 	const Content = (props) => {
+		const handleContentSubmit = () => {
+			setPage('summary')
+		}
 		const [list, setList] = useState([]);
 		const handleAdd = () => {
 			let tmp = resList;
@@ -158,12 +272,15 @@ export default function Resource() {
 						</div>
 					</div>
 					{list.map((res, index) => (
+						<>
+						<hr className="mt-2 mb-4"></hr>
 						<div className="grid grid-cols-3 gap-4">
 							<RenderField index={index} res={res} key={index} setResList={setResList} />
 						</div>
+						</>
 					))}
 					<div className="pr-0 py-3 mt-5 sm:flex sm:flex-row-reverse sm:pl-6">
-						<button type="button" className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" onClick={() => setPage('summary')}>Submit</button>
+						<button type="button" className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" onClick={() => handleContentSubmit()}>Submit</button>
 					</div>
 				</form>
 			</>
@@ -171,6 +288,18 @@ export default function Resource() {
 	}
 
 	const Summary = () => {
+		
+		const handleSummarySubmit = async () => {
+			if(resList?.length === 0) return;
+			try {
+				const response = await axios.post('https://639feb7024d74f9fe829db07.mockapi.io/api/v1/resource', resList);
+				setSummarySubmitRes(response.data);
+				setPage('track')
+			} catch(err) {
+				console.log(err)
+			}
+		}
+
 		return (
 			<>
 				<div className="bg-white pt-5">
@@ -196,25 +325,22 @@ export default function Resource() {
 												</label>
 												<input type="text" className="form-control block col-span-2 w-full px-3 py-1.5 text-base font-normal bg-white bg-clip-padding border border-solid border-gray-300 rounded" name="type" value={res.type} disabled />
 											</div>
-											<div className="form-group flex grid md:grid-cols-3 gap-2 md:gap-4 items-center mb-6">
-												<label className="block text-gray-700 text-sm font-bold md:mb-2" htmlFor="name">
-													Flavour:
-												</label>
-												<input type="text" className="form-control block col-span-2 w-full px-3 py-1.5 text-base font-normal bg-white bg-clip-padding border border-solid border-gray-300 rounded"
-													name="name" value={res.flavour} disabled />
-											</div>
-											<div className="form-group flex grid md:grid-cols-3 gap-2 md:gap-4  items-center mb-6">
-												<label className="block text-gray-700 text-sm font-bold md:mb-2" htmlFor="name">
-													Template Type:
-												</label>
-												<input type="text" className="form-control block col-span-2 w-full px-3 py-1.5 text-base font-normal bg-white bg-clip-padding border border-solid border-gray-300 rounded" name="type" value={res.template} disabled />
-											</div>
+											{
+												Object.keys(res).map((item, index) => (
+													<div className="form-group flex grid md:grid-cols-3 gap-2 md:gap-4  items-center mb-6">
+														<label className="block text-gray-700 text-sm font-bold md:mb-2" htmlFor="name">
+														{item}
+														</label>
+														<input type="text" className="form-control block col-span-2 w-full px-3 py-1.5 text-base font-normal bg-white bg-clip-padding border border-solid border-gray-300 rounded" name="type" value={res[item]} disabled />
+													</div>
+												))
+											}
 										</div>
 										<hr />
 									</>
 								))}
 								<div className="bg-gray-50 pr-0 py-3 sm:flex sm:flex-row-reverse sm:pl-6">
-									<button type="submit" className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" onClick={() => setPage('track')}>Submit</button>
+									<button type="button" className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" onClick={() => handleSummarySubmit()}>Submit</button>
 									<button type="button" className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onClick={() => setPage('content')}>Back</button>
 								</div>
 							</form>
@@ -234,7 +360,44 @@ export default function Resource() {
 							<h1 className="text-center">Track</h1>
 							<hr className="mt-2 mb-4"></hr>
 							<form>
-								<div className="bg-gray-600 text-center p-10 rounded">Track Page</div>
+								<div className="form-group flex grid md:grid-cols-3 gap-2 md:gap-4 items-center mb-6">
+									<label className="block text-gray-700 text-sm font-bold md:mb-2" htmlFor="name">
+										Job Status:
+									</label>
+									<input type="text" className="form-control
+															block
+															col-span-2
+															w-full
+															px-3
+															py-1.5
+															text-base
+															font-normal
+															bg-white bg-clip-padding
+															border border-solid border-gray-300
+															rounded"
+															name="name"
+										value={summarySubmitRes?.status}
+										disabled />
+								</div>
+								<div className="form-group flex grid md:grid-cols-3 gap-2 md:gap-4 items-center mb-6">
+									<label className="block text-gray-700 text-sm font-bold md:mb-2" htmlFor="name">
+										Job Info:
+									</label>
+									<input type="text" className="form-control
+															block
+															col-span-2
+															w-full
+															px-3
+															py-1.5
+															text-base
+															font-normal
+															bg-white bg-clip-padding
+															border border-solid border-gray-300
+															rounded"
+															name="name"
+										value={summarySubmitRes?.job_info}
+										disabled />
+								</div>
 								<div className="bg-gray-50 pr-0 py-3 sm:flex sm:flex-row-reverse sm:pl-6">
 									<button type="submit" className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm">Submit</button>
 									<button type="button" className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onClick={() => setPage('summary')}>Back</button>
