@@ -16,7 +16,7 @@ const dataType = {
   "CreationTime": ""
 }
 
-export default function Modal({ setShowModal, id = -1, userID, saveData }) {
+export default function Modal({ setShowModal, id = -1, userID, saveData, setShowConfirmAdded, setShowErrorAddingEnv, setErrorMessage }) {
   const [envmData, setEnvmData] = useState(dataType);
   const [isUpdate, setUpdate] = useState(false);
   const [focus, setFocus] = useState('EnvironmentId');
@@ -65,9 +65,19 @@ export default function Modal({ setShowModal, id = -1, userID, saveData }) {
       axios.put(`https://639feb7024d74f9fe829db07.mockapi.io/api/v1/environment/${envmData.EnvironmentId}`, envmData)
         .then(response => {
           if (response.data.status === "success") {
+            console.log('hello')
             saveData(envmData, isUpdate);
             setShowModal(false);
+            setShowConfirmAdded(true);
+          } else {
+            setShowModal(false);
+            setErrorMessage(response.data.message)
+            setShowErrorAddingEnv(true);
           }
+        }).catch(err => {
+          setShowModal(false);
+          setErrorMessage(err.message);
+          setShowErrorAddingEnv(true);
         });
     } else {
         if(!Object.keys(envmData).every(key => key==='UserId' || envmData[key] === '' || envmData[key] === false)){
@@ -76,7 +86,16 @@ export default function Modal({ setShowModal, id = -1, userID, saveData }) {
               if (response.data.status === "success") {
                 saveData(envmData, isUpdate);
                 setShowModal(false);
+                setShowConfirmAdded(true)
+              } else {
+                setShowModal(false);
+                setErrorMessage(response.data.message)
+                setShowErrorAddingEnv(true);
               }
+            }).catch(err => {
+              setErrorMessage(err.message);
+              setShowModal(false);
+              setShowErrorAddingEnv(true);
             });
         } else {
             alert('Please fill all the fields');
