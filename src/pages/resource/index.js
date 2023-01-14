@@ -4,9 +4,6 @@ import axios from 'axios';
 import { useSelector } from 'react-redux'
 
 const resType = {
-	"type": "",
-	"flavour": "",
-	"template": ""
 }
 const TB_CLASS = "px-6 py-4 text-sm text-gray-800 whitespace-nowrap";
 
@@ -59,31 +56,56 @@ export default function Resource() {
 			setType(param);
 			if (resData) {
 				const field = resData.filter(val => val.type === param)
-				if (param !== '') {
+				console.log(param)
+				if (param !== '' && param !== undefined) {
 					setResField(field[0].fields);
 				} else {
 					setResField(null);
 				}
 			}
 		}
+		console.log(resField, 'resField')
+		console.log(resList)
 
 		useEffect(() => {
 			let tmp = resList;
-			tmp[props.index] = {
-				"type": type,
-				"flavour": flavour,
-				"template": template,
-				"quantity": quantinty,
-				"ven_release": ven_release,
-				"ven_os": ven_os,
-				"ven_version": ven_version,
-				"basename": basename,
-				"default_location": default_location,
-				"required": required,
-				"build_info": build_info,
-			}
+			let obj = {};
+			obj.type = type;
+			resField.map((val, index) => {
+				if (val.hasOwnProperty('flavour')) {
+					obj.flavour = flavour;
+				}
+				if (val.hasOwnProperty('template')) {
+					obj.template = template;
+				}
+				if (val.hasOwnProperty('quantity')) {
+					obj.quantity = quantinty;
+				}
+				if (val.hasOwnProperty('ven_release')) {
+					obj.ven_release = ven_release;
+				}
+				if (val.hasOwnProperty('ven_os')) {
+					obj.ven_os = ven_os;
+				}
+				if (val.hasOwnProperty('ven_version')) {
+					obj.ven_version = ven_version;
+				}
+				if (val.hasOwnProperty('basename')) {
+					obj.basename = basename;
+				}
+				if (val.hasOwnProperty('default_location')) {
+					obj.default_location = default_location;
+				}
+				if (val.hasOwnProperty('required')) {
+					obj.required = required;
+				}
+				if (val.hasOwnProperty('build_info')) {
+					obj.build_info = build_info;
+				}
+			})
+			tmp[props.index] = obj
 			setResList(tmp);
-			onChangeType(type)
+			onChangeType(type);
 		}, [type, flavour, template, quantinty, ven_release, ven_os, ven_version, basename, default_location, required, build_info]);
 		const fields = resField;
 		const handleChange = (item, val) => {
@@ -116,6 +138,7 @@ export default function Resource() {
 					setDefault_location(val);
 				}
 				if(key === 'required'){
+					console.log(val)
 					setRequired(val);
 				}
 			}
@@ -221,7 +244,7 @@ export default function Resource() {
 									{
 										item.required === 'checkbox' && (
 											<>
-											<input value={required} type="checkbox" id='cb' name='cb' onChange={(e) => handleChange(item, e.target.value)} className="p-1.5 text-gray-500 border rounded-md shadow-sm outline-none" required />
+											<input value={required} type="checkbox" id='cb' name='cb' onChange={(e) => handleChange(item, e.target.checked)} className="p-1.5 text-gray-500 border rounded-md shadow-sm outline-none" required />
 										</>
 										)
 									}
@@ -289,6 +312,7 @@ export default function Resource() {
 
 	const Summary = () => {
 		
+		console.log(resList, 'resList')
 		const handleSummarySubmit = async () => {
 			if(resList?.length === 0) return;
 			try {
@@ -327,6 +351,7 @@ export default function Resource() {
 											</div>
 											{
 												Object.keys(res).map((item, index) => (
+													item!=='type' && 
 													<div className="form-group flex grid md:grid-cols-3 gap-2 md:gap-4  items-center mb-6">
 														<label className="block text-gray-700 text-sm font-bold md:mb-2" htmlFor="name">
 														{item}
