@@ -17,15 +17,15 @@ export default function Resource() {
 	const [resList, setResList] = useState([resType]);
 	const [summarySubmitRes, setSummarySubmitRes] = useState(null);
 
-	useEffect(() => {
-		if (!envList.length) {
-			axios.get('https://639feb7024d74f9fe829db07.mockapi.io/api/v1/environment/?user_id=' + currentUser.id)
+	if (!envList.length) {
+			axios.get('https://639feb7024d74f9fe829db07.mockapi.io/api/v1/environment?user_id=' + currentUser.id)
 				.then(response => {
 					if (response.data.status === "Success") {
 						setEnvList(response.data.environments)
 					}
 				});
-		}
+	}
+	useEffect(() => {	
 		if (resData === null) {
 			axios.get('https://639feb7024d74f9fe829db07.mockapi.io/api/v1/fields')
 				.then(response => setResData(response.data.resources));
