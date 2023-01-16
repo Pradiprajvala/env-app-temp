@@ -123,7 +123,7 @@ export default function Environment() {
 													<td className={DATA_CLASS}>{item.CreationTime}</td>
 													<td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap cursor-pointer">
 														<a className="text-green-500 hover:text-green-700"
-															onClick={() => editData(item.EnvironmentId)}>
+															onClick={() => editData(currentUser.id)}>
 															Edit
 														</a>
 													</td>

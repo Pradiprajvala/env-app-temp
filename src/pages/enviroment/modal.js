@@ -62,7 +62,7 @@ export default function Modal({ setShowModal, id = -1, userID, saveData, setShow
   const addEvnData = () => {
     envmData.UserId = userID;
     if (isUpdate) {
-      axios.put(`https://639feb7024d74f9fe829db07.mockapi.io/api/v1/environment/${envmData.EnvironmentId}`, envmData)
+      axios.put(`https://639feb7024d74f9fe829db07.mockapi.io/api/v1/environment?user_id=${id}&environment_name=${envmData.EnvironmentName}`, envmData)
         .then(response => {
           if (response.data.status === "success") {
             console.log('hello')
