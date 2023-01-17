@@ -41,7 +41,7 @@ export default function Resource() {
 	const RenderField = (props) => {
 		const [type, setType] = useState(props.res.type);
 		const [flavour, setFlavour] = useState(props.res.flavour);
-		const [template, setTemplate] = useState(props.res.template);
+		const [template, setTemplate] = useState(props.res.template_type);
 		const [quantinty, setQuantity] = useState(props.res.quantity);
 		const [ven_release, setVen_release] = useState(props.res.ven_release);
 		const [ven_os, setVen_os] = useState(props.res.ven_os);
@@ -75,8 +75,8 @@ export default function Resource() {
 				if (val.hasOwnProperty('flavour')) {
 					obj.flavour = flavour;
 				}
-				if (val.hasOwnProperty('template')) {
-					obj.template = template;
+				if (val.hasOwnProperty('template_type')) {
+					obj.template_type = template;
 				}
 				if (val.hasOwnProperty('quantity')) {
 					obj.quantity = quantinty;
