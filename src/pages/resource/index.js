@@ -39,6 +39,7 @@ export default function Resource() {
 	}, [resList, page]);
 
 	const RenderField = (props) => {
+		console.log('renderedField', props)
 		const [type, setType] = useState(props.res.type);
 		const [flavour, setFlavour] = useState(props.res.flavour);
 		const [template, setTemplate] = useState(props.res.template_type);
@@ -70,39 +71,44 @@ export default function Resource() {
 		useEffect(() => {
 			let tmp = resList;
 			let obj = {};
-			obj.type = type;
 			resField.map((val, index) => {
 				if (val.hasOwnProperty('flavour')) {
-					obj.flavour = flavour;
+					props.res.flavour = flavour;
 				}
 				if (val.hasOwnProperty('template_type')) {
-					obj.template_type = template;
+					props.res.template_type = template;
 				}
 				if (val.hasOwnProperty('quantity')) {
-					obj.quantity = quantinty;
+					props.res.quantity = quantinty;
 				}
 				if (val.hasOwnProperty('ven_release')) {
-					obj.ven_release = ven_release;
+					props.res.ven_release = ven_release;
 				}
 				if (val.hasOwnProperty('ven_os')) {
-					obj.ven_os = ven_os;
+					props.res.ven_os = ven_os;
 				}
 				if (val.hasOwnProperty('ven_version')) {
-					obj.ven_version = ven_version;
+					props.res.ven_version = ven_version;
 				}
 				if (val.hasOwnProperty('basename')) {
-					obj.basename = basename;
+					props.res.basename = basename;
 				}
 				if (val.hasOwnProperty('default_location')) {
-					obj.default_location = default_location;
+					props.res.default_location = default_location;
 				}
 				if (val.hasOwnProperty('required')) {
-					obj.required = required;
+					props.res.required = required;
 				}
 				if (val.hasOwnProperty('build_info')) {
-					obj.build_info = build_info;
+					props.res.build_info = build_info;
 				}
 			})
+			console.log(props.res, 'props res')
+			for (const key of Object.keys(props.res)) {
+				obj[key] = props.res[key];
+			}
+			// obj = [...props.res]
+			obj.type = type;
 			tmp[props.index] = obj
 			setResList(tmp);
 			onChangeType(type);
