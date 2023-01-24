@@ -27,6 +27,7 @@ export default function Report() {
 				})
 			})
 			setPceDetails(pceData);
+			console.log(resData[0].Driver_Details)
 
 			setDriverDetails(resData[0].Driver_Details);
 
@@ -63,14 +64,29 @@ export default function Report() {
 	return (
 		<>
 			<div className="grid gap-x-6 gap-y-6 md:grid-cols-3 grid-cols-1">
-				<div className="text-center p-5 bg-gray-600 rounded">
-					PCE: {resData.length && resData[0].PCE}
+				<div className="text-center"> 
+				<div className="text-gray-700 text-m font-bold m-2">
+					PCE
 				</div>
-				<div className="text-center p-5 bg-gray-600 rounded">
-					Driver: {resData.length && resData[0].Driver}
+				<div className="text-center text-m font-bold text-white p-5 bg-gray-600 rounded">
+					{resData.length && resData[0].PCE}
 				</div>
-				<div className="text-center p-5 bg-gray-600 rounded">
-					VEN: {resData.length && resData[0].VEN}
+				</div>
+				<div className="text-center">
+				<div className="text-gray-700 text-m font-bold m-2">
+					Driver
+				</div>
+				<div className="text-center text-m font-bold text-white p-5 bg-gray-600 rounded">
+					{resData.length && resData[0].Driver}
+				</div>
+				</div>
+				<div className="text-center">
+				<div className="text-gray-700 text-m font-bold m-2">
+					VEN
+				</div>
+				<div className="text-center text-m font-bold text-white p-5 bg-gray-600 rounded">
+					{resData.length && resData[0].VEN}
+				</div>
 				</div>
 			</div>
 			<div className="flex flex-col">
@@ -121,37 +137,37 @@ export default function Report() {
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											OS
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											OSVersion
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											Host Name
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											Network
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											Storage
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											Power Status
 										</th>
@@ -224,7 +240,7 @@ export default function Report() {
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											Host Name
 										</th>
@@ -236,31 +252,31 @@ export default function Report() {
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											Network
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											OS
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											OSVersion
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											Power Status
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											Storage
 										</th>
@@ -330,7 +346,7 @@ export default function Report() {
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											Host Name
 										</th>
@@ -342,31 +358,31 @@ export default function Report() {
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											Network
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											OS
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											OSVersion
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											Power Status
 										</th>
 										<th
 											scope="col"
-											className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
+											className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
 										>
 											Storage
 										</th>
