@@ -62,11 +62,17 @@ export default function Report() {
 	]
 	return (
 		<>
-			{/* <div className="grid gap-x-6 gap-y-6 md:grid-cols-3 grid-cols-1">
-				<div className="text-center p-5 bg-gray-600 rounded">01</div>
-				<div className="text-center p-5 bg-gray-600 rounded">02</div>
-				<div className="text-center p-5 bg-gray-600 rounded">03</div>
-			</div> */}
+			<div className="grid gap-x-6 gap-y-6 md:grid-cols-3 grid-cols-1">
+				<div className="text-center p-5 bg-gray-600 rounded">
+					PCE: {resData.length && resData[0].PCE}
+				</div>
+				<div className="text-center p-5 bg-gray-600 rounded">
+					Driver: {resData.length && resData[0].Driver}
+				</div>
+				<div className="text-center p-5 bg-gray-600 rounded">
+					VEN: {resData.length && resData[0].VEN}
+				</div>
+			</div>
 			<div className="flex flex-col">
 				<div className="overflow-x-auto">
 					<div className="mt-10 w-full inline-block align-middle">

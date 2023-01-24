@@ -250,7 +250,7 @@ export default function Resource() {
 									{
 										item.required === 'checkbox' && (
 											<>
-											<input value={required} type="checkbox" id='cb' name='cb' onChange={(e) => handleChange(item, e.target.checked)} className="p-1.5 text-gray-500 border rounded-md shadow-sm outline-none" required />
+											<input checked={required} value={required} type="checkbox" id='cb' name='cb' onChange={(e) => handleChange(item, e.target.checked)} className="p-1.5 text-gray-500 border rounded-md shadow-sm outline-none" required />
 										</>
 										)
 									}
