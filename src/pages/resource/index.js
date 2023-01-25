@@ -322,7 +322,7 @@ export default function Resource() {
 		const handleSummarySubmit = async () => {
 			if(resList?.length === 0) return;
 			try {
-				const response = await axios.post('https://639feb7024d74f9fe829db07.mockapi.io/api/v1/resource', resList);
+				const response = await axios.post('https://639feb7024d74f9fe829db07.mockapi.io/api/v1/resource', {resList, envType: envType, userId: currentUser?.id});
 				setSummarySubmitRes(response.data);
 				setPage('track')
 			} catch(err) {
