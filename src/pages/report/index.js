@@ -22,12 +22,11 @@ export default function Report() {
 			let data = resData[0].PCE_Details;
 			let pceData = [];
 			data.map((item, index) => {
-				item?.PDetail?.map((res, index) => {
-					pceData.push(res);
+				return item?.PDetail?.map((res, index) => {
+					return pceData.push(res);
 				})
 			})
 			setPceDetails(pceData);
-			console.log(resData[0].Driver_Details)
 
 			setDriverDetails(resData[0].Driver_Details);
 
